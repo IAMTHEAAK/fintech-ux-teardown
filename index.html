@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Fintech UX Teardowns — 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Editorial+New:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f2;--bg2:#eeede8;--bg3:#e5e4de;
+  --ink:#111010;--ink2:#555450;--ink3:#aaa89e;
+  --border:#dddbd3;--border2:#cccac0;
+  --r:#d63a2e;--r-bg:#fdf0ee;
+  --b:#1a4fa8;--b-bg:#eef3fc;
+  --g:#1a6b3a;--g-bg:#eaf5ee;
+  --o:#c95b0a;--o-bg:#fdf3eb;
+  --sans:'Outfit',sans-serif;
+  --mono:'DM Mono',monospace;
+  --serif:'Playfair Display',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;}
+.page{max-width:1000px;margin:0 auto;padding:3rem 1.5rem 6rem;}
+
+/* masthead */
+.mast{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1.5px solid var(--ink);}
+.mast-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;}
+.mast-title{font-family:var(--serif);font-size:clamp(34px,6vw,72px);font-weight:700;line-height:1.0;letter-spacing:-0.02em;margin-bottom:16px;}
+.mast-title em{font-style:italic;font-weight:400;}
+.mast-meta{display:flex;gap:24px;flex-wrap:wrap;align-items:center;}
+.meta-item{font-family:var(--mono);font-size:11px;color:var(--ink3);display:flex;align-items:center;gap:6px;}
+.meta-dot{width:5px;height:5px;border-radius:50%;background:var(--ink3);}
+
+/* app tabs */
+.app-tabs{display:flex;gap:0;margin-bottom:0;border-bottom:1.5px solid var(--ink);}
+.app-tab{
+  padding:12px 24px;font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;border:none;background:none;font-family:var(--sans);font-size:13px;font-weight:500;
+  color:var(--ink3);border-bottom:3px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;
+  display:flex;align-items:center;gap:8px;
+}
+.app-tab:hover{color:var(--ink);}
+.app-tab.active{color:var(--ink);border-bottom-color:var(--ink);}
+.tab-score{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:3px;font-weight:500;}
+
+/* app panel */
+.app-panel{display:none;padding-top:2.5rem;animation:in 0.3s ease;}
+.app-panel.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* panel layout */
+.panel-grid{display:grid;grid-template-columns:1fr 320px;gap:2rem;margin-bottom:2.5rem;}
+@media(max-width:720px){.panel-grid{grid-template-columns:1fr;}}
+
+/* app intro */
+.app-header{margin-bottom:1.5rem;}
+.app-name{font-family:var(--serif);font-size:32px;font-weight:700;margin-bottom:4px;}
+.app-tagline{font-size:14px;color:var(--ink2);margin-bottom:12px;}
+.app-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.atag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:3px;border:1px solid;letter-spacing:0.04em;}
+
+/* score card */
+.score-card{background:var(--ink);color:#fff;border-radius:16px;padding:1.5rem;position:sticky;top:1rem;}
+.sc-title{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#888;margin-bottom:1rem;}
+.sc-overall{text-align:center;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid #333;}
+.sc-num{font-family:var(--serif);font-size:56px;font-weight:700;line-height:1;}
+.sc-label{font-family:var(--mono);font-size:10px;color:#888;margin-top:2px;}
+.sc-dims{display:flex;flex-direction:column;gap:10px;}
+.sc-dim{display:flex;flex-direction:column;gap:5px;}
+.sd-top{display:flex;justify-content:space-between;align-items:center;}
+.sd-name{font-size:12px;color:#ccc;}
+.sd-val{font-family:var(--mono);font-size:12px;font-weight:500;}
+.sd-bar{height:3px;background:#333;border-radius:2px;}
+.sd-fill{height:100%;border-radius:2px;}
+
+/* onboarding flow */
+.flow-section{margin-bottom:2rem;}
+.flow-title{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;}
+.flow-steps{display:flex;gap:0;overflow-x:auto;padding-bottom:8px;}
+.flow-step{flex-shrink:0;width:120px;display:flex;flex-direction:column;align-items:center;position:relative;}
+.flow-step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:18px;font-family:var(--mono);font-size:14px;color:var(--ink3);}
+.fs-circle{width:40px;height:40px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:500;margin-bottom:8px;}
+.fs-label{font-size:11px;text-align:center;color:var(--ink2);line-height:1.4;padding:0 4px;}
+.fs-flag{font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:2px;margin-top:4px;text-align:center;}
+
+/* observations */
+.obs-list{display:flex;flex-direction:column;gap:12px;margin-bottom:2rem;}
+.obs-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:white;}
+.obs-head{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border);}
+.obs-num{font-family:var(--mono);font-size:11px;color:var(--ink3);}
+.obs-title{font-size:14px;font-weight:600;flex:1;}
+.obs-type{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:3px;border:1px solid;}
+.obs-body{padding:14px 16px;}
+.obs-finding{font-size:13px;color:var(--ink);line-height:1.7;margin-bottom:10px;}
+.obs-impact{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-bottom:6px;}
+.obs-fix{font-size:12px;padding:8px 12px;border-radius:6px;border:1px solid;line-height:1.6;}
+
+/* verdict */
+.verdict-strip{border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2.5rem;border:1px solid;}
+.vs-label{font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:6px;}
+.vs-text{font-size:14px;line-height:1.7;}
+.vs-bottom{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.vs-pill{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:3px;border:1px solid;}
+
+/* comparison table */
+.comp-section{margin-bottom:2rem;}
+.comp-title{font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px;}
+.comp-table{border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.ct-row{display:grid;grid-template-columns:140px repeat(4,1fr);border-bottom:1px solid var(--border);font-size:12px;}
+.ct-row:last-child{border-bottom:none;}
+.ct-row.header{background:var(--bg2);font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:0.05em;text-transform:uppercase;}
+.ct-cell{padding:10px 14px;border-right:1px solid var(--border);}
+.ct-cell:last-child{border-right:none;}
+.ct-val{font-family:var(--mono);font-size:11px;font-weight:500;}
+@media(max-width:640px){.ct-row{grid-template-columns:100px repeat(4,1fr);}.ct-cell{padding:8px;font-size:11px;}}
+
+/* footer */
+footer{margin-top:3rem;padding-top:2rem;border-top:1.5px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.ft-l{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ink2);}
+.ft-r{font-family:var(--mono);font-size:10px;color:var(--ink3);text-align:right;line-height:1.8;}
+.ft-r a{color:var(--ink);text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="mast">
+    <div class="mast-eyebrow">Product Teardown Series · India Fintech · 2025</div>
+    <div class="mast-title">Indian Fintech<br><em>UX Teardowns</em></div>
+    <div class="mast-meta">
+      <div class="meta-item"><div class="meta-dot"></div>4 apps analyzed</div>
+      <div class="meta-item"><div class="meta-dot"></div>12 UX observations</div>
+      <div class="meta-item"><div class="meta-dot"></div>Based on live app sessions</div>
+      <div class="meta-item"><div class="meta-dot"></div>Ayush Khandual · IIM Bangalore</div>
+    </div>
+  </div>
+
+  <!-- comparison table at top -->
+  <div class="comp-section">
+    <div class="comp-title">// at a glance — all 4 apps</div>
+    <div class="comp-table">
+      <div class="ct-row header">
+        <div class="ct-cell">Dimension</div>
+        <div class="ct-cell">CRED</div>
+        <div class="ct-cell">Jupiter</div>
+        <div class="ct-cell">Fi</div>
+        <div class="ct-cell">Slice</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell" style="font-weight:500;">Overall</div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--g)">82/100</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--b)">76/100</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--o)">71/100</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--r)">64/100</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell" style="font-weight:500;">Trust signals</div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--g)">91</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--b)">78</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--o)">72</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--r)">58</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell" style="font-weight:500;">Onboarding clarity</div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--g)">78</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--b)">80</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--o)">74</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--r)">55</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell" style="font-weight:500;">Activation UX</div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--g)">85</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--b)">74</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--o)">68</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--r)">62</span></div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-cell" style="font-weight:500;">Feature discoverability</div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--g)">72</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--b)">70</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--o)">70</span></div>
+        <div class="ct-cell"><span class="ct-val" style="color:var(--r)">72</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- tabs -->
+  <div class="app-tabs" id="app-tabs">
+    <button class="app-tab active" onclick="switchApp(0,this)">CRED <span class="tab-score" style="background:var(--g-bg);color:var(--g)">82</span></button>
+    <button class="app-tab" onclick="switchApp(1,this)">Jupiter <span class="tab-score" style="background:var(--b-bg);color:var(--b)">76</span></button>
+    <button class="app-tab" onclick="switchApp(2,this)">Fi <span class="tab-score" style="background:var(--o-bg);color:var(--o)">71</span></button>
+    <button class="app-tab" onclick="switchApp(3,this)">Slice <span class="tab-score" style="background:var(--r-bg);color:var(--r)">64</span></button>
+  </div>
+
+  <div id="app-panels"></div>
+
+  <footer>
+    <div class="ft-l">Product teardowns grounded in live app sessions.<br>All observations are the author's independent analysis.</div>
+    <div class="ft-r">Built by <a href="https://iamtheaak.github.io">Ayush Khandual</a><br>IIM Bangalore · 2026<br>github.com/iamtheaak</div>
+  </footer>
+</div>
+
+<script>
+const APPS = [
+  {
+    name:'CRED',
+    tagline:'Credit card bill payment and rewards platform. ~10M users.',
+    color:'var(--g)',bg:'var(--g-bg)',borderC:'rgba(26,107,58,0.3)',
+    tags:[{t:'credit cards',c:'var(--g)',bg:'var(--g-bg)'},{t:'rewards',c:'var(--g)',bg:'var(--g-bg)'},{t:'lending',c:'var(--g)',bg:'var(--g-bg)'}],
+    scores:{overall:82,trust:91,onboarding:78,activation:85,discoverability:72},
+    verdict:{text:`CRED has the most polished UX in Indian fintech. The exclusivity framing — "only for people with 750+ credit score" — creates genuine aspiration. The rewards loop is psychologically well-designed. The main weakness is feature bloat post-Series D: the app tries to be a financial super-app but the navigation doesn't scale gracefully. New users don't discover CRED's loan and investment products; they get stuck in the bill payment loop.`,good:['Trust engineering','Activation design','Rewards loop'],bad:['Feature discoverability','Navigation depth','Super-app coherence'],accentC:'var(--g)',accentBg:'var(--g-bg)'},
+    flow:[
+      {n:'01',label:'Install + open',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'02',label:'Score check',flag:'friction point',flagC:'var(--o)',flagBg:'var(--o-bg)',borderC:'var(--o)'},
+      {n:'03',label:'KYC + PAN',flag:'drop-off risk',flagC:'var(--r)',flagBg:'var(--r-bg)',borderC:'var(--r)'},
+      {n:'04',label:'Card linking',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'05',label:'First reward',flag:'delight moment',flagC:'var(--b)',flagBg:'var(--b-bg)',borderC:'var(--b)'},
+    ],
+    obs:[
+      {title:'The exclusivity gate is genius — but oversold',type:'positioning',typeC:'var(--b)',typeBg:'var(--b-bg)',finding:`CRED's 750+ credit score requirement is a masterclass in trust engineering. It removes the "who is this for?" ambiguity that kills most fintech apps. Users who pass the gate feel qualified, not screened. The problem: CRED has silently lowered this bar significantly over the last 18 months, and power users notice. The exclusivity claim is becoming aspirational fiction.`,impact:'Impact: Trust erosion among early adopters. The positioning story starts to feel performative.',fix:'Fix: Either enforce the gate consistently or change the narrative from "exclusive" to "premium". Half-measures kill both positioning and trust.',fixC:'var(--b)',fixBg:'var(--b-bg)'},
+      {title:'Reward redemption UX creates addiction — deliberately',type:'engagement',typeC:'var(--g)',typeBg:'var(--g-bg)',finding:`CRED Coins have no visible exchange rate on the homescreen. Users tap "Rewards" before they understand what coins are worth. This is intentional — it creates exploration behaviour that increases time-in-app before any transaction. The coin burn flow (vouchers, cashback, CRED coins) uses 3 separate reward currencies, creating perceived complexity that slows redemption and improves margin.`,impact:'Impact: High engagement, lower actual reward redemption rates. Good for CRED\'s unit economics, borderline deceptive UX.',fix:'Fix: For long-term trust, show coin value upfront. Short-term ARPU vs long-term retention — CRED is choosing the former.',fixC:'var(--g)',fixBg:'var(--g-bg)'},
+      {title:'Post-bill-payment dead end — massive activation fail',type:'activation',typeC:'var(--r)',typeBg:'var(--r-bg)',finding:`After a user pays their first bill via CRED, the confirmation screen shows: "Bill paid. ✓". Then — nothing. No prompt to explore CRED Cash, no loan pre-qualification, no cross-sell to CRED Travel or CRED Store. The most engaged moment (transaction completion) is wasted. First-time users who came to pay a bill leave without discovering that CRED has 15+ other products.`,impact:'Impact: Massive missed cross-sell opportunity. The "aha moment" for CRED\'s broader product is never triggered for bill-payment-first users.',fix:'Fix: Post-payment confirmation screen should have one contextual next step — relevant to the user\'s financial profile, not a generic promo.',fixC:'var(--r)',fixBg:'var(--r-bg)'},
+    ]
+  },
+  {
+    name:'Jupiter',
+    tagline:'Neo-bank targeting salaried millennials. IDFC FIRST Bank licensed.',
+    color:'var(--b)',bg:'var(--b-bg)',borderC:'rgba(26,79,168,0.3)',
+    tags:[{t:'neo-bank',c:'var(--b)',bg:'var(--b-bg)'},{t:'savings account',c:'var(--b)',bg:'var(--b-bg)'},{t:'UPI',c:'var(--b)',bg:'var(--b-bg)'}],
+    scores:{overall:76,trust:78,onboarding:80,activation:74,discoverability:70},
+    verdict:{text:`Jupiter has the cleanest onboarding in Indian fintech. The 3-minute account opening flow is genuinely impressive. The "Pots" savings feature is well-designed and creates a second engagement loop beyond payments. The weakness is post-activation: once a user has set up their account and one Pot, Jupiter doesn't give them a reason to come back daily. Transaction notifications are the main retention mechanism — not enough for a neo-bank competing with HDFC's familiarity.`,good:['Onboarding speed','Pot savings UX','Visual design'],bad:['Daily engagement hook','Cross-sell timing','Investment product discovery'],accentC:'var(--b)',accentBg:'var(--b-bg)'},
+    flow:[
+      {n:'01',label:'Phone + OTP',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'02',label:'PAN + KYC',flag:'fastest in class',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'03',label:'Account open',flag:'<3 mins',flagC:'var(--b)',flagBg:'var(--b-bg)',borderC:'var(--b)'},
+      {n:'04',label:'First Pot',flag:'prompted well',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'05',label:'First txn',flag:'friction point',flagC:'var(--o)',flagBg:'var(--o-bg)',borderC:'var(--o)'},
+    ],
+    obs:[
+      {title:`"Pots" is the best savings UX in Indian fintech`,type:'feature design',typeC:'var(--g)',typeBg:'var(--g-bg)',finding:`Jupiter's "Pots" — named savings buckets with custom goals and auto-debit — solve a genuine behavioural problem: people don't save because money in a single account feels spendable. Pots create mental accounting via physical UI separation. The onboarding for Pots (shown in session 2, not session 1) is well-timed and the naming mechanic (you name your own Pot) drives emotional investment.`,impact:'Impact: Users who set up a Pot have significantly higher 30-day retention. The feature creates a reason to return that pure payment apps don\'t have.',fix:'Fix: Introduce Pots earlier — during account setup, not after first transaction. The value is highest before the first paycheck lands.',fixC:'var(--g)',fixBg:'var(--g-bg)'},
+      {title:'Investment tab is discoverable but the entry bar is too high',type:'activation',typeC:'var(--o)',typeBg:'var(--o-bg)',finding:`Jupiter's Mutual Fund and Gold investment features are visible in the bottom nav but the entry flow requires re-KYC for investments (SEBI requirement). This creates a hard stop for users who completed bank KYC but not investment KYC. Most users see this wall once and never return to the investment tab — they write it off as "not for me" rather than understanding it's a regulatory step they can complete.`,impact:'Impact: Investment feature penetration is likely <8% of active users despite high discoverability. The regulatory friction is real but the UX around it isn\'t.',fix:'Fix: When a user hits the investment KYC wall, show progress — "2 more steps to activate" with clear time estimate. Don\'t make the barrier feel infinite.',fixC:'var(--o)',fixBg:'var(--o-bg)'},
+      {title:'Spend analytics is good but arrives too late',type:'retention',typeC:'var(--r)',typeBg:'var(--r-bg)',finding:`Jupiter's spend categorisation and monthly analytics are genuinely well-built — better than most traditional banks. The issue is that these insights are surfaced at month-end (when the summary is ready) rather than in real-time. Users check other apps (Google Pay, PhonePe) for transaction history. Jupiter misses daily-driver status because it's not where users think to look for "what did I just spend".`,impact:'Impact: Jupiter is used for savings management (weekly/monthly frequency) but loses out on the daily transaction mental model.',fix:'Fix: Push real-time spend categorisation notifications. Own the "you just spent ₹450 on food today" moment before the user opens Google Pay.',fixC:'var(--r)',fixBg:'var(--r-bg)'},
+    ]
+  },
+  {
+    name:'Fi',
+    tagline:'Neo-bank with AI-powered money management. Federal Bank licensed.',
+    color:'var(--o)',bg:'var(--o-bg)',borderC:'rgba(201,91,10,0.3)',
+    tags:[{t:'neo-bank',c:'var(--o)',bg:'var(--o-bg)'},{t:'AI insights',c:'var(--o)',bg:'var(--o-bg)'},{t:'investments',c:'var(--o)',bg:'var(--o-bg)'}],
+    scores:{overall:71,trust:72,onboarding:74,activation:68,discoverability:70},
+    verdict:{text:`Fi has the most ambitious product vision of the four — an AI-powered financial assistant that proactively tells you what to do with your money. The execution is uneven. The "Ask Fi" AI feature is genuinely differentiated but surface-level in practice; it answers "how much did I spend on food?" but can't handle nuanced queries. The onboarding is clean but slower than Jupiter. The biggest problem is that Fi is building for a user who thinks deeply about money — but their actual user base just wants a fast account with no fees.`,good:['AI differentiation angle','Spend insights depth','Visual design'],bad:['Ask Fi AI depth','Activation speed','Product-market fit clarity'],accentC:'var(--o)',accentBg:'var(--o-bg)'},
+    flow:[
+      {n:'01',label:'Install + phone',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'02',label:'KYC / PAN',flag:'avg. 4 mins',flagC:'var(--o)',flagBg:'var(--o-bg)',borderC:'var(--o)'},
+      {n:'03',label:'Account setup',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'04',label:'Ask Fi intro',flag:'weak hook',flagC:'var(--r)',flagBg:'var(--r-bg)',borderC:'var(--r)'},
+      {n:'05',label:'First insight',flag:'delayed',flagC:'var(--o)',flagBg:'var(--o-bg)',borderC:'var(--o)'},
+    ],
+    obs:[
+      {title:'"Ask Fi" is the right bet — but undersells itself at first contact',type:'core feature',typeC:'var(--b)',typeBg:'var(--b-bg)',finding:`Fi's AI chatbot "Ask Fi" is shown to new users with the prompt "Ask me anything about your finances". This is both true and terrible onboarding copy. New users have no transaction history — they have nothing to ask. The feature's value is invisible on day 1. The activation sequence should surface Ask Fi only after the first 5–10 transactions, when it can demonstrate value with actual data.`,impact:'Impact: Ask Fi gets ignored by most new users. The differentiating feature never gets a fair chance because the timing is wrong.',fix:'Fix: Replace the generic intro with a concrete example: "After your first week, Ask Fi can tell you: where your salary went, what your top spending categories are, and what you\'re saving vs last month."',fixC:'var(--b)',fixBg:'var(--b-bg)'},
+      {title:'The "connected accounts" setup creates cognitive overload',type:'onboarding',typeC:'var(--r)',typeBg:'var(--r-bg)',finding:`Fi prompts users to connect their other bank accounts during onboarding to get a "complete financial picture." This is strategically correct but tactically problematic. Asking a new user to share other bank credentials before they've experienced Fi's value creates a trust deficit. The cognitive load of connecting 2–3 accounts during setup causes many users to abandon mid-onboarding and return to the app only as a standalone bank — missing the aggregation value entirely.`,impact:'Impact: The aggregation thesis (Fi as financial HQ) fails for most users because the setup UX front-loads trust before demonstrating value.',fix:'Fix: Show the aggregated dashboard in a read-only demo first. Show users what their financial picture would look like, then ask for connections.',fixC:'var(--r)',fixBg:'var(--r-bg)'},
+      {title:'Spend insights are powerful but buried two taps deep',type:'retention',typeC:'var(--o)',typeBg:'var(--o-bg)',finding:`Fi's monthly spend reports — category breakdowns, merchant rankings, spending trends — are among the best-designed in Indian fintech. They're also accessible via: Home → Insights tab → This month → Category view. Four taps for a feature that should be the reason users open Fi daily. The homescreen is dominated by the account balance and quick actions, relegating the core value proposition to a secondary tab.`,impact:'Impact: Users who never discover the Insights depth don\'t develop a daily check-in habit. Retention is weaker than it should be given the product quality.',fix:'Fix: Surface one insight card on the homescreen daily — contextual to spending patterns. Make "what I found about your money today" the daily hook.',fixC:'var(--o)',fixBg:'var(--o-bg)'},
+    ]
+  },
+  {
+    name:'Slice',
+    tagline:'Buy now pay later credit card. Targeting thin-file and young users.',
+    color:'var(--r)',bg:'var(--r-bg)',borderC:'rgba(214,58,46,0.3)',
+    tags:[{t:'BNPL',c:'var(--r)',bg:'var(--r-bg)'},{t:'credit card',c:'var(--r)',bg:'var(--r-bg)'},{t:'Gen-Z',c:'var(--r)',bg:'var(--r-bg)'}],
+    scores:{overall:64,trust:58,onboarding:55,activation:62,discoverability:72},
+    verdict:{text:`Slice solves a real problem — giving credit access to users with thin or no credit history. The product-market fit is real. The UX is not. Onboarding is the weakest of the four apps; multiple users report abandonment at the income verification step. The app feels like a credit card with a consumer app skin rather than a consumer app that happens to offer credit. The trust signals are weak for a product that holds financial data and extends credit — a significant risk as RBI tightens BNPL regulation.`,good:['ICP clarity (thin file users)','Spend flexibility UX','Feature discoverability'],bad:['Trust signals','Onboarding completion','Regulatory risk communication'],accentC:'var(--r)',accentBg:'var(--r-bg)'},
+    flow:[
+      {n:'01',label:'Phone + OTP',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+      {n:'02',label:'PAN + Income',flag:'high drop-off',flagC:'var(--r)',flagBg:'var(--r-bg)',borderC:'var(--r)'},
+      {n:'03',label:'Credit check',flag:'anxiety point',flagC:'var(--r)',flagBg:'var(--r-bg)',borderC:'var(--r)'},
+      {n:'04',label:'Limit reveal',flag:'delight/disappointment',flagC:'var(--o)',flagBg:'var(--o-bg)',borderC:'var(--o)'},
+      {n:'05',label:'First spend',flag:'smooth',flagC:'var(--g)',flagBg:'var(--g-bg)',borderC:'var(--g)'},
+    ],
+    obs:[
+      {title:'The credit limit reveal is a UX lottery — and users know it',type:'activation',typeC:'var(--o)',typeBg:'var(--o-bg)',finding:`Slice reveals your credit limit only after completing full KYC and income verification — a 6–8 minute process. The limit varies from ₹2,000 to ₹10,00,000 with no predictability for the user. Users who get low limits (₹2,000–₹5,000) feel misled by the onboarding narrative which implies meaningful credit access. The mismatch between expectation (set during install) and reality (revealed post-KYC) creates immediate churn.`,impact:'Impact: Users with limits under ₹10,000 have significantly lower activation rates. The product should either set expectations earlier or pre-screen before asking for KYC effort.',fix:'Fix: Add a 30-second pre-qualification check (age, employment type, rough income bracket) before the full KYC flow. Set limit expectations before you ask for commitment.',fixC:'var(--o)',fixBg:'var(--o-bg)'},
+      {title:'Trust signals are weak for a product that needs trust most',type:'trust',typeC:'var(--r)',typeBg:'var(--r-bg)',finding:`Slice's app has no visible banking licence badge, no RBI registration callout, and no prominent security certifications on the homescreen. For CRED's "750+ score" users, trust is established by exclusivity. For Slice's "thin-file, first-credit" users, trust needs to be explicitly constructed — this demographic is most likely to distrust fintech apps and most likely to be targeted by fraudulent alternatives. Slice does nothing to differentiate itself from them visually.`,impact:'Impact: Users who drop off at KYC frequently cite "not sure if it\'s legit" in reviews. Trust investment on the app surface directly impacts conversion.',fix:'Fix: Add "RBI licensed via [partner bank]", a visible SSL/security badge, and a "how we protect your data" one-pager in onboarding. This is table stakes for credit products.',fixC:'var(--r)',fixBg:'var(--r-bg)'},
+      {title:'Repayment UX is the best feature nobody talks about',type:'retention',typeC:'var(--g)',typeBg:'var(--g-bg)',finding:`Slice's repayment flow — choose how much to pay, split across months, set auto-pay — is genuinely better than most traditional credit card apps. The "pay what you want" flexibility combined with clear interest cost display is honest UX for a demographic that needs to understand credit costs. The irony is that this feature — the one most likely to build trust and habit — is not mentioned in any Slice marketing and is invisible to new users until they have a balance to repay.`,impact:'Impact: A retention-driving feature is completely absent from the acquisition and activation funnel.',fix:'Fix: Show the repayment simulator during onboarding. "See how flexible repayment works before you spend a rupee" — this could become Slice\'s key differentiator vs BNPL alternatives.',fixC:'var(--g)',fixBg:'var(--g-bg)'},
+    ]
+  }
+];
+
+let currentApp = 0;
+
+function renderPanels(){
+  const container = document.getElementById('app-panels');
+  container.innerHTML = '';
+  APPS.forEach((app,i)=>{
+    const active = i===0?'active':'';
+    const dimKeys = ['trust','onboarding','activation','discoverability'];
+    const dimLabels = ['Trust signals','Onboarding clarity','Activation UX','Feature discoverability'];
+    let dimsHtml = dimKeys.map((k,j)=>{
+      const v = app.scores[k];
+      const c = v>=80?'#22dd88':v>=65?'#f5c542':'#ff5566';
+      return `<div class="sc-dim">
+        <div class="sd-top"><span class="sd-name">${dimLabels[j]}</span><span class="sd-val" style="color:${c}">${v}</span></div>
+        <div class="sd-bar"><div class="sd-fill" style="width:${v}%;background:${c}"></div></div>
+      </div>`;
+    }).join('');
+
+    let flowHtml = app.flow.map(s=>`
+      <div class="flow-step">
+        <div class="fs-circle" style="border-color:${s.borderC};color:${s.borderC}">${s.n}</div>
+        <div class="fs-label">${s.label}</div>
+        <div class="fs-flag" style="background:${s.flagBg};color:${s.flagC};border:1px solid ${s.flagC}40">${s.flag}</div>
+      </div>`).join('');
+
+    let obsHtml = app.obs.map((o,j)=>`
+      <div class="obs-card">
+        <div class="obs-head">
+          <span class="obs-num">0${j+1}</span>
+          <span class="obs-title">${o.title}</span>
+          <span class="obs-type" style="color:${o.typeC};background:${o.typeBg};border-color:${o.typeC}40">${o.type}</span>
+        </div>
+        <div class="obs-body">
+          <div class="obs-finding">${o.finding}</div>
+          <div class="obs-impact">${o.impact}</div>
+          <div class="obs-fix" style="background:${o.fixBg};border-color:${o.fixC}40;color:var(--ink)"><strong style="color:${o.fixC}">→</strong> ${o.fix}</div>
+        </div>
+      </div>`).join('');
+
+    let tagHtml = app.tags.map(t=>`<span class="atag" style="color:${t.c};background:${t.bg};border-color:${t.c}40">${t.t}</span>`).join('');
+    let goodHtml = app.verdict.good.map(g=>`<span class="vs-pill" style="color:var(--g);background:var(--g-bg);border-color:rgba(26,107,58,0.3)">${g}</span>`).join('');
+    let badHtml = app.verdict.bad.map(b=>`<span class="vs-pill" style="color:var(--r);background:var(--r-bg);border-color:rgba(214,58,46,0.3)">${b}</span>`).join('');
+
+    container.innerHTML += `
+      <div class="app-panel ${active}" id="panel-${i}">
+        <div class="panel-grid">
+          <div>
+            <div class="app-header">
+              <div class="app-name" style="color:${app.color}">${app.name}</div>
+              <div class="app-tagline">${app.tagline}</div>
+              <div class="app-tags">${tagHtml}</div>
+            </div>
+            <div class="flow-section">
+              <div class="flow-title">// onboarding flow map</div>
+              <div class="flow-steps">${flowHtml}</div>
+            </div>
+          </div>
+          <div>
+            <div class="score-card">
+              <div class="sc-title">overall score</div>
+              <div class="sc-overall">
+                <div class="sc-num" style="color:${app.color}">${app.scores.overall}</div>
+                <div class="sc-label">/100</div>
+              </div>
+              <div class="sc-dims">${dimsHtml}</div>
+            </div>
+          </div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--ink3);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:12px;">// three observations</div>
+        <div class="obs-list">${obsHtml}</div>
+        <div class="verdict-strip" style="border-color:${app.borderC};background:${app.bg}">
+          <div class="vs-label" style="color:${app.color}">// verdict</div>
+          <div class="vs-text">${app.verdict.text}</div>
+          <div class="vs-bottom">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-right:4px;">works:</span>${goodHtml}
+            <span style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:8px;margin-right:4px;">gaps:</span>${badHtml}
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function switchApp(i, el){
+  document.querySelectorAll('.app-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.app-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+i).classList.add('active');
+  el.classList.add('active');
+  currentApp = i;
+}
+
+renderPanels();
+</script>
+</body>
+</html>
