@@ -1,8 +1,8 @@
-# Indian Fintech UX Teardowns — 2025
+# Indian Fintech UX Teardowns 2025
 
-> Structured product teardowns of 4 Indian fintech apps — CRED, Jupiter, Fi, and Slice.
+> Structured product teardowns of 4 Indian fintech apps: CRED, Jupiter, Fi, and Slice.
 
-**[→ Live Demo](https://iamtheaak.github.io/fintech-ux-teardowns)**
+**[→ Live Demo](https://iamtheaak.github.io/fintech-ux-teardown/)**
 
 ---
 
@@ -28,11 +28,11 @@
 
 **CRED** — The post-bill-payment confirmation screen is a massive missed activation moment. The most engaged point in the user journey leads nowhere.
 
-**Jupiter** — "Pots" is the best savings UX in Indian fintech. But it's introduced too late — after the first transaction rather than during setup.
+**Jupiter** — "Pots" is the best savings UX in Indian fintech. But it's introduced too late after the first transaction rather than during setup.
 
 **Fi** — "Ask Fi" AI is correctly positioned as the differentiator but shown to users before they have any data to query. Timing kills the feature's first impression.
 
-**Slice** — The repayment flexibility UX is genuinely better than traditional credit cards — but it's invisible to new users and absent from all marketing.
+**Slice** — The repayment flexibility UX is genuinely better than traditional credit cards but it's invisible to new users and absent from all marketing.
 
 ## Scoring methodology
 
@@ -48,9 +48,7 @@ Pure HTML, CSS, JavaScript. All data is the author's independent analysis from l
 
 ## Why I built this
 
-After analysing BlinkMoney's onboarding for a product role application, I wanted to apply the same framework systematically across the Indian fintech landscape. These are the 4 apps I use or have used — the observations are real, not hypothetical.
-
-Related: [Creator Economy India Dashboard](https://github.com/iamtheaak/creator-economy-india) — same research methodology applied to the creator economy.
+After analysing BlinkMoney's onboarding for a product role application, I wanted to apply the same framework systematically across the Indian fintech landscape. These are the 4 apps I use or have used the observations are real, not hypothetical.
 
 ---
 
